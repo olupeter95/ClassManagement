@@ -52,7 +52,7 @@ $db = $database->getConnection();
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h2 class="box-title">All Class</h2>
+                            <h2 class="box-title">All Teacher</h2>
                             <a href="add_teacher.php" class="btn btn-info btn-md float-right">
                                 <i class="fa fa-plus"></i>&nbsp; Add Teacher
                             </a>

@@ -15,7 +15,7 @@ if(!empty($_POST['action']) && $_POST['action'] == 'viewTeacher'){
 if(!empty($_POST['action']) && $_POST['action'] == 'updateTeacher'){
     $teacher->id = $_GET['id'];
     $teacher->class_name = $_POST['class_name'];
-    $teacher->category_id = $_POST['category_id'];
+    $teacher->class_id = $_POST['class_id'];
     $teacher->update();   
     exit;
 }
@@ -26,7 +26,10 @@ if(isset($_GET['id']) && $_GET['name'] == 'delTeacher'){
 }
 
 if(!empty($_POST['action']) && $_POST['action'] == 'addTeacher'){
-    $teacher->class_name = $_POST['class_name'];
-    $teacher->category_id = $_POST['category_id'];
+    $teacher->name = $_POST['name'];
+    $teacher->email = $_POST['email'];
+    $teacher->phone = $_POST['phone'];
+    $teacher->address = $_POST['address'];
+    $teacher->class_id = $_POST['class_id'];
     $teacher->add();
 }

@@ -34,7 +34,21 @@ class Teacher
 
     public function add()
     {
-
+        $stmt = $this->conn->prepare("INSERT INTO {$this->table} (`name`, `email`, `phone`, `address`, 
+        `class_id`) VALUES(?,?,?,?,?)");
+        $this->name = ucwords(htmlspecialchars(strip_tags($this->name)));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->phone = htmlspecialchars(strip_tags($this->phone));
+        $this->address = ucwords(htmlspecialchars(strip_tags($this->address)));
+        $this->class_id = htmlspecialchars(strip_tags($this->class_id));
+        $stmt->bind_param('ssssi', $this->name, $this->email, $this->phone, $this->address, $this->class_id);
+        if($stmt->execute()){
+            $response = [
+                'success' => true,
+                'message' => 'New Teacher Added Successfully',
+            ];
+            echo json_encode($response);
+        }
     }
 
     public function update()

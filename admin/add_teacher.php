@@ -53,23 +53,35 @@ $db = $database->getConnection();
                     <div class="box">
 					  
                       <div class="box-header with-border">
-                        <h4 class="box-title">Add Class</h4>
+                        <h4 class="box-title">Add Teacher</h4>
                       </div>
                       <div class="box-body">
                             <div class="form-group">
-                                <label>Class Name</label>
-                                <input type="text" class="form-control" id="class_name"
-                                    name="class_name" placeholder="Class Name">
+                                <label>Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="name" required>
                             </div>
                             <div class="form-group">
-                                <label>Category Name</label>
-                                <select class="form-control" id="category_id" name="category_id">
+                                <label>Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="text" class="form-control" id="phone" placeholder="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input type="text" class="form-control" id="address" placeholder="address" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Class Name</label>
+                                <select class="form-control" id="class_id" name="class_id" required>
+                                    <option value="" selected>Select Class</option>
                                 <?php
-                                $query = $db->query("SELECT * FROM class_category");
+                                $query = $db->query("SELECT * FROM class");
                                 if($query->num_rows > 0){
                                     while($rows = $query->fetch_assoc()){?>
                                     <option value="<?php echo $rows['id']?>">
-                                    <?php echo $rows['category_name']?></option>
+                                    <?php echo $rows['class_name']?></option>
                                     <?php
                                     }
                                 }
@@ -77,8 +89,8 @@ $db = $database->getConnection();
                             ?>
                                 </select>
                             </div>
-                            <button type="button" class="btn btn-primary" onclick="addClass()">
-                            Add Class</button>
+                            <button type="button" class="btn btn-primary" onclick="addTeacher()">
+                            Add Teacher</button>
                         </div>
                         
                      
@@ -113,77 +125,24 @@ $db = $database->getConnection();
 	<script src="js/template.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
-        function viewClass(){
-            var action = 'viewClass'
-            $.ajax({
-                type:'post',
-                dataType:'json',
-                data:{action:action},
-                url:'action/group_action.php',
-                success: function(data){
-                    var rows = ''
-                    var i = 1
-                    console.log(data)
-                    $.each(data, function(key, value){
-                        rows += `
-                        <tr>
-                                                    <td>${i++}</td>
-                                                    <td>${value.class_name}</td>
-                                                    <td>${value.category_name}</td>
-                                                    <td>
-                                                        <a href="edit_class.php?id=${value.id}" class="btn btn-primary">
-                                                        <i class="fa fa-pencil"></i>&nbsp;Edit
-                                                        </a>
-                                                        <a href="action/group_action.php?id=${value.id}&name=delClass" class="btn btn-danger delete">
-                                                        <i class="fa fa-trash"></i>&nbsp;Delete</a>
-                                                    </td>
-                                                </tr>`
-                    }) 
-                    $('#info').html(rows)
-                }
-            })
-        }
-        viewClass()
-    </script>
-	<script type="text/javascript">  
-         $(document).on('click', '.delete', function(e){
-             e.preventDefault();
-             var link = $(this).attr("href");
-             Swal.fire({
-                      title: 'Are you sure?',
-                      text: "You won't be able to revert this!",
-                      icon: 'warning',
-                      showCancelButton: true,
-                      confirmButtonColor: '#3085d6',
-                      cancelButtonColor: '#d33',
-                      confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        window.location.href = link
-                        Swal.fire(
-                          'Deleted!',
-                          'Your file has been deleted.',
-                          'success'
-                        )
-                      }
-                    });
-            });
-    </script>
-    <script type="text/javascript">
-        function addClass(){
-            var class_name = $('#class_name').val()
-            var category_id = $('#category_id').val()
-            var action = 'addClass'
+        function addTeacher(){
+            var name = $('#name').val()
+            var email = $('#email').val()
+            var phone = $('#phone').val()
+            var address = $('#address').val()
+            var class_id = $('#class_id').val()
+            var action = 'addTeacher'
             $.ajax({
                 type: 'post',
-                url: 'action/group_action.php',
-                data: {class_name:class_name, category_id:category_id, action:action},
+                url: 'action/teacher_action.php',
+                data: {name:name, email:email, phone:phone, address:address, 
+                class_id:class_id, action:action},
                 success: function(data){
                     var result = JSON.parse(data)
                     if(result.success = true){
-                        viewClass()
                         toastr.success(result.message)
                     }
+                    location.href = "http://localhost/classmanagement/admin/teacher.php"
                 }
             })
         }
