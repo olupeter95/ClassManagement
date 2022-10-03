@@ -25,17 +25,17 @@ $db = $database->getConnection();
 	<!-- Style-->  
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/skin_color.css">
-    
-    <!-- Script--> 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 
+    <!-- Script--> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
      
   </head>
 
 <body class="hold-transition dark-skin sidebar-mini theme-primary fixed">
 	
 <div class="wrapper">
+	
 
   <?php
 	include_once 'header.php';
@@ -114,18 +114,17 @@ $db = $database->getConnection();
 </div>
 <!-- ./wrapper -->
   	
-	 
-	<!-- Vendor JS -->
-	<script src="js/vendors.min.js"></script>
+    <!-- Vendor JS -->
+    <script src="js/vendors.min.js"></script>
     <script src="../assets/icons/feather-icons/feather.min.js"></script>	
     <script src="../assets/vendor_components/datatable/datatables.min.js"></script>
 	<script src="js/pages/data-table.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 	
-	
 	<!-- Sunny Admin App -->
 	<script src="js/template.js"></script>
-    <script type="text/javascript">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script type="text/javascript">
         function updateClass(id){
             var class_name = $('#class_name').val()
             var category_id = $('#category_id').val()
@@ -137,8 +136,8 @@ $db = $database->getConnection();
                 success: function(data){
                     var result = JSON.parse(data)
                     if(result.success = true){
-                        location.href = "http://localhost/classmanagement/admin/class.php"
                         toastr.success(result.message)
+                        viewClass()
                     }
                 }
             })

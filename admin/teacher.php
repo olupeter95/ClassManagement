@@ -34,8 +34,6 @@ $db = $database->getConnection();
 <body class="hold-transition dark-skin sidebar-mini theme-primary fixed">
 	
 <div class="wrapper">
-	
-
 
   <?php
 	include_once 'header.php';
@@ -51,10 +49,13 @@ $db = $database->getConnection();
 		<!-- Main content -->
 		<section class="content">
 			<div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Class</h3>
+                            <h2 class="box-title">All Class</h2>
+                            <a href="add_teacher.php" class="btn btn-info btn-md float-right">
+                                <i class="fa fa-plus"></i>&nbsp; Add Teacher
+                            </a>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -66,16 +67,26 @@ $db = $database->getConnection();
                                             <thead>
                                                 <tr role="row">
                                                     <th width="5%">ID</th>
-                                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" 
-                                                    rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" 
-                                                    style="width: 130.203px;">Class Category</th>
-                                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" 
-                                                    rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" 
-                                                    style="width: 130.203px;">Name</th>
-                                                    <th width="50%">Action</th>
+                                                    <th class="sorting_asc" aria-sort="ascending" aria-controls="example1" 
+                                                    aria-label="Name: activate to sort column descending">
+                                                        Name
+                                                    </th>
+                                                    <th class="sorting_asc"aria-sort="ascending" aria-controls="example1" 
+                                                    aria-label="Name: activate to sort column descending">
+                                                        Email
+                                                    </th>
+                                                    <th class="sorting_asc" aria-sort="ascending" aria-controls="example1" 
+                                                    aria-label="Name: activate to sort column descending">
+                                                        Phone
+                                                    </th>
+                                                    <th class="sorting_asc" aria-sort="ascending" aria-controls="example1" 
+                                                    aria-label="Name: activate to sort column descending">Address</th>
+                                                    <th class="sorting_asc" aria-sort="ascending" aria-controls="example1" 
+                                                    aria-label="Name: activate to sort column descending">Class Assigned</th>
+                                                    <th width="30%">Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="info">
+                                            <tbody id="teacher_info">
                                                 
                                             </tbody>
                                         </table>
@@ -86,41 +97,6 @@ $db = $database->getConnection();
                         <!-- /.box-body -->
                     </div>
                 </div><!-- /.col-md-8 -->
-                <div class="col-md-4">
-                    <div class="box">
-					  
-                      <div class="box-header with-border">
-                        <h4 class="box-title">Add Class</h4>
-                      </div>
-                      <div class="box-body">
-                            <div class="form-group">
-                                <label>Class Name</label>
-                                <input type="text" class="form-control" id="class_name"
-                                    name="class_name" placeholder="Class Name">
-                            </div>
-                            <div class="form-group">
-                                <label>Category Name</label>
-                                <select class="form-control" id="category_id" name="category_id">
-                                <?php
-                                $query = $db->query("SELECT * FROM class_category");
-                                if($query->num_rows > 0){
-                                    while($rows = $query->fetch_assoc()){?>
-                                    <option value="<?php echo $rows['id']?>">
-                                    <?php echo $rows['category_name']?></option>
-                                    <?php
-                                    }
-                                }
-                                $db->close();
-                            ?>
-                                </select>
-                            </div>
-                            <button type="button" class="btn btn-primary" onclick="addClass()">
-                            Add Class</button>
-                        </div>
-                        
-                     
-                    </div>
-                </div><!-- /.col-md-4 -->
             </div>
 		</section>
 		<!-- /.content -->
@@ -137,10 +113,8 @@ $db = $database->getConnection();
   
 </div>
 <!-- ./wrapper -->
-  	
-	 
-	<!-- Vendor JS -->
-	<script src="js/vendors.min.js"></script>
+<!-- Vendor JS -->
+    <script src="js/vendors.min.js"></script>
     <script src="../assets/icons/feather-icons/feather.min.js"></script>	
     <script src="../assets/vendor_components/datatable/datatables.min.js"></script>
 	<script src="js/pages/data-table.js"></script>
@@ -149,14 +123,15 @@ $db = $database->getConnection();
 	<!-- Sunny Admin App -->
 	<script src="js/template.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script type="text/javascript">
-        function viewClass(){
-            var action = 'viewClass'
+  	
+    <script type="text/javascript">
+        function viewTeacher(){
+            var action = 'viewTeacher'
             $.ajax({
                 type:'post',
                 dataType:'json',
                 data:{action:action},
-                url:'action/group_action.php',
+                url:'action/teacher_action.php',
                 success: function(data){
                     var rows = ''
                     var i = 1
@@ -165,23 +140,27 @@ $db = $database->getConnection();
                         rows += `
                         <tr>
                                                     <td>${i++}</td>
+                                                    <td>${value.name}</td>
+													<td>${value.email}</td>
+													<td>${value.phone}</td>
+													<td>${value.address}</td>
                                                     <td>${value.class_name}</td>
-                                                    <td>${value.category_name}</td>
                                                     <td>
-                                                        <a href="edit_class.php?id=${value.id}" class="btn btn-primary">
+                                                        <a href="edit_teacher.php?id=${value.id}" class="btn btn-primary">
                                                         <i class="fa fa-pencil"></i>&nbsp;Edit
                                                         </a>
-                                                        <a href="action/group_action.php?id=${value.id}&name=delClass" class="btn btn-danger delete">
+                                                        <a href="action/teacher_action.php?id=${value.id}&name=delTeacher" class="btn btn-danger delete">
                                                         <i class="fa fa-trash"></i>&nbsp;Delete</a>
                                                     </td>
                                                 </tr>`
                     }) 
-                    $('#info').html(rows)
+                    $('#teacher_info').html(rows)
                 }
             })
         }
-        viewClass()
+        viewTeacher()
     </script>
+
 	<script type="text/javascript">  
          $(document).on('click', '.delete', function(e){
              e.preventDefault();
@@ -225,6 +204,5 @@ $db = $database->getConnection();
             })
         }
     </script>
-  
 </body>
 </html>

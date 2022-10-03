@@ -63,9 +63,9 @@
         </li> 
         
         <li>
-          <a href="teachers.php">
+          <a href="teacher.php">
             <i data-feather="user"></i>
-			<span>Teacher</span>
+			      <span>Teacher</span>
           </a>
         </li>
       </ul>

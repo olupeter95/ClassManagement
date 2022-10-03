@@ -34,8 +34,6 @@ $db = $database->getConnection();
 <body class="hold-transition dark-skin sidebar-mini theme-primary fixed">
 	
 <div class="wrapper">
-	
-
 
   <?php
 	include_once 'header.php';
@@ -51,42 +49,7 @@ $db = $database->getConnection();
 		<!-- Main content -->
 		<section class="content">
 			<div class="row">
-                <div class="col-md-8">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Class</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <div class="table-responsive">
-                            <div id="example1_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4"></div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th width="5%">ID</th>
-                                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" 
-                                                    rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" 
-                                                    style="width: 130.203px;">Class Category</th>
-                                                    <th class="sorting_asc" tabindex="0" aria-controls="example1" 
-                                                    rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" 
-                                                    style="width: 130.203px;">Name</th>
-                                                    <th width="50%">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="info">
-                                                
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                </div><!-- /.col-md-8 -->
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <div class="box">
 					  
                       <div class="box-header with-border">
@@ -149,7 +112,7 @@ $db = $database->getConnection();
 	<!-- Sunny Admin App -->
 	<script src="js/template.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script type="text/javascript">
+    <script type="text/javascript">
         function viewClass(){
             var action = 'viewClass'
             $.ajax({
@@ -225,6 +188,5 @@ $db = $database->getConnection();
             })
         }
     </script>
-  
 </body>
 </html>
