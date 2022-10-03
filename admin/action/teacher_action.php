@@ -10,11 +10,15 @@ $teacher = new Teacher($db);
 
 if(!empty($_POST['action']) && $_POST['action'] == 'viewTeacher'){
     $teacher->view();
+    exit;
 }
 
 if(!empty($_POST['action']) && $_POST['action'] == 'updateTeacher'){
     $teacher->id = $_GET['id'];
-    $teacher->class_name = $_POST['class_name'];
+    $teacher->name = $_POST['name'];
+    $teacher->email = $_POST['email'];
+    $teacher->phone = $_POST['phone'];
+    $teacher->address = $_POST['address'];
     $teacher->class_id = $_POST['class_id'];
     $teacher->update();   
     exit;
@@ -23,6 +27,7 @@ if(!empty($_POST['action']) && $_POST['action'] == 'updateTeacher'){
 if(isset($_GET['id']) && $_GET['name'] == 'delTeacher'){
     $teacher->id = $_GET['id'];
     $teacher->delete();
+    exit;
 }
 
 if(!empty($_POST['action']) && $_POST['action'] == 'addTeacher'){
@@ -32,4 +37,5 @@ if(!empty($_POST['action']) && $_POST['action'] == 'addTeacher'){
     $teacher->address = $_POST['address'];
     $teacher->class_id = $_POST['class_id'];
     $teacher->add();
+    exit;
 }

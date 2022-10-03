@@ -53,7 +53,23 @@ class Teacher
 
     public function update()
     {
-
+        $stmt = $this->conn->prepare("UPDATE {$this->table} SET `name` = ?, `email` = ?, `phone` = ?,
+        `address` = ?, `class_id` = ? WHERE id = ?");
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->name = ucwords(htmlspecialchars(strip_tags($this->name)));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->phone = htmlspecialchars(strip_tags($this->phone));
+        $this->address = ucwords(htmlspecialchars(strip_tags($this->address)));
+        $this->class_id = htmlspecialchars(strip_tags($this->class_id));
+        $stmt->bind_param('ssssii', $this->name, $this->email, $this->phone, $this->address, 
+        $this->class_id, $this->id);
+        if($stmt->execute()){
+            $response = [
+                'success' => true,
+                'message' => 'Teacher Updated Successfully',
+            ];
+            echo json_encode($response);
+        }
     }
 
     public function delete()
