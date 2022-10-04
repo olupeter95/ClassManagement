@@ -53,7 +53,7 @@ $db = $database->getConnection();
                     <div class="box">
                         <div class="box-header with-border">
                             <h2 class="box-title">Student Details</h2>
-                            <a href="add_teacher.php" class="btn btn-info btn-md float-right">
+                            <a href="add_student.php" class="btn btn-info btn-md float-right">
                                 <i class="fa fa-plus"></i>&nbsp; Add Student
                             </a>
                         </div>
