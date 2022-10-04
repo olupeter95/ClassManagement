@@ -48,6 +48,7 @@ class Teacher
                 'message' => 'New Teacher Added Successfully',
             ];
             echo json_encode($response);
+            
         }
     }
 
@@ -74,6 +75,11 @@ class Teacher
 
     public function delete()
     {
-
+        $stmt = $this->conn->prepare("DELETE FROM {$this->table} WHERE id = ?");
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $stmt->bind_param('i', $this->id);
+        if($stmt->execute()){
+            header("location: ../teacher.php");
+        }
     }
 }

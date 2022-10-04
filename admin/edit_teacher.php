@@ -155,6 +155,7 @@ $db = $database->getConnection();
                 class_id:class_id, action:action},
                 success: function(data){
                     var result = JSON.parse(data)
+                    sessionStorage.setItem("alert:", result)
                     if(result.success = true){
                         toastr.success(result.message)
                     }
