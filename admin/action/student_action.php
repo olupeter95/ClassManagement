@@ -30,12 +30,16 @@ if(isset($_GET['id']) && $_GET['name'] == 'delStudent'){
     exit;
 }
 
-if(!empty($_POST['action']) && $_POST['action'] == 'addStudent'){
+if(isset($_POST['addStudent'])){
     $student->name = $_POST['name'];
     $student->email = $_POST['email'];
     $student->phone = $_POST['phone'];
+    $student->guardian_name = $_POST['guardian_name'];
     $student->address = $_POST['address'];
     $student->class_id = $_POST['class_id'];
+    $student->teacher_id = $_POST['teacher_id'];
+    $student->profile_photo = $_FILES["profile_photo"];
     $student->add();
     exit;
 }
+

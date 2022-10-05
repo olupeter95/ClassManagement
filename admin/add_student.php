@@ -51,7 +51,7 @@ $db = $database->getConnection();
 			<div class="row">
                 <div class="col-md-12">
                     <div class="box">
-					  <form enctype="multipart/form-data">
+					  <form action="action/student_action.php" method="post" enctype="multipart/form-data">
                       <div class="box-header with-border">
                         <h4 class="box-title">Add Student</h4>
                       </div>
@@ -60,19 +60,19 @@ $db = $database->getConnection();
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input type="text" class="form-control" id="name" placeholder="name" required>
+                                    <input type="text" class="form-control" name="name" placeholder="name" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" class="form-control" id="email" placeholder="email" required>
+                                    <input type="email" class="form-control" name="email" placeholder="email" required>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Phone</label>
-                                    <input type="text" class="form-control" id="phone" placeholder="phone" required>
+                                    <input type="text" class="form-control" name="phone" placeholder="phone" required>
                                 </div>
                             </div>
                         </div>
@@ -80,13 +80,13 @@ $db = $database->getConnection();
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Guardian Name</label>
-                                    <input type="text" class="form-control" id="guardian_name" placeholder="guardian name" required>
+                                    <input type="text" class="form-control" name="guardian_name" placeholder="guardian name" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Address</label>
-                                    <input type="text" class="form-control" id="address" placeholder="address" required>
+                                    <input type="text" class="form-control" name="address" placeholder="address" required>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +143,7 @@ $db = $database->getConnection();
                             </div>
                         </div>
                         
-                            <button type="button" class="btn btn-primary" onclick="addStudent()">
+                            <button type="submit" class="btn btn-primary" name="addStudent">
                             Add Student</button>
                     </form>
                         </div>
@@ -208,27 +208,7 @@ $db = $database->getConnection();
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
-        function addTeacher(){
-            var name = $('#name').val()
-            var email = $('#email').val()
-            var phone = $('#phone').val()
-            var address = $('#address').val()
-            var class_id = $('#class_id').val()
-            var action = 'addTeacher'
-            $.ajax({
-                type: 'post',
-                url: 'action/teacher_action.php',
-                data: {name:name, email:email, phone:phone, address:address, 
-                class_id:class_id, action:action},
-                success: function(data){
-                    var result = JSON.parse(data)
-                    if(result.success = true){
-                        toastr.success(result.message)
-                    }
-                    location.href = "http://localhost/classmanagement/admin/teacher.php"
-                }
-            })
-        }
+        
     </script>
 </body>
 </html>
