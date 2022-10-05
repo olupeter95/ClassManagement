@@ -48,10 +48,10 @@ class Student
         $this->class_id = htmlspecialchars(strip_tags($this->class_id));
         $this->teacher_id = htmlspecialchars(strip_tags($this->teacher_id));
         if(!empty($this->profile_photo)){
-            $target_dir = "/uploads/students/profile_photo";
+            $target_dir = 'C:\xampp1\htdocs\ClassManagement\uploads\students\profile_photo/';
             $target_file = $target_dir . basename($this->profile_photo["name"]);
             $uploadOk = 1;
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
             // Check if image file is a actual image or fake image
             $check = getimagesize($this->profile_photo["tmp_name"]);
@@ -87,17 +87,18 @@ class Student
             // if everything is ok, try to upload file
             } else {
                 if (move_uploaded_file($this->profile_photo["tmp_name"], $target_file)) {
-                echo "The file ". htmlspecialchars( basename( $this->profile_photo["name"])). " has been uploaded.";
+                    echo "The file ". htmlspecialchars( basename( $this->profile_photo["name"])). " has been uploaded.";
                 } else {
                 echo "Sorry, there was an error uploading your file.";
                 }
-                $stmt = $this->conn->prepare("INSERT INTO {$this->table} (`name`, `phone`, `email`, `guardian_name`,
-                `address`, `class_id`, `teacher_id`, `profile_photo`) VALUES(?,?,?,?,?,?,?,?)");
-                $stmt->bind_param("sssssiis", $this->name, $this->phone, $this->email, $this->address,
-                $this->guardian_name, $this->class_id, $this->teacher_id, $this->profile_photo["name"]);
-                if($stmt->execute()){
-                    header("location: student.php?id= echo {$this->class_id}&message=student added with profile image");
-                }
+                
+            }
+            $stmt = $this->conn->prepare("INSERT INTO {$this->table} (`name`, `phone`, `email`, `guardian_name`,
+            `address`, `class_id`, `teacher_id`, `profile_photo`) VALUES(?,?,?,?,?,?,?,?)");
+            $stmt->bind_param("sssssiis", $this->name, $this->phone, $this->email, $this->address,
+            $this->guardian_name, $this->class_id, $this->teacher_id, $this->profile_photo["name"]);
+            if($stmt->execute()){
+                echo "success";
             }
 
         }else{
