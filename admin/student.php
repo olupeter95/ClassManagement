@@ -152,7 +152,7 @@ $db = $database->getConnection();
                             <td>
                                 <a href="edit_student.php?id=${value.id}" class="btn btn-primary" title="Edit">
                                 <i class="fa fa-pencil"></i></a><br><br>
-                                <a href="action/student_action.php?id=${value.id}&name=delTeacher" title="Delete" class="btn btn-danger delete">
+                                <a href="action/student_action.php?id=${value.id}&name=delStudent&class_id=${value.cid}" title="Delete" class="btn btn-danger delete">
                                 <i class="fa fa-trash"></i></a>
                             </td>
                          </tr>`

@@ -28,6 +28,7 @@ if(!empty($_POST['action']) && $_POST['action'] == 'updateStudent'){
 
 if(isset($_GET['id']) && $_GET['name'] == 'delStudent'){
     $student->id = $_GET['id'];
+    $student->class_id = $_GET['class_id'];
     $student->delete();
 }
 

@@ -23,8 +23,8 @@ class Student
     {
         $stmt = $this->conn->prepare("SELECT {$this->table}.`id` as id, {$this->table}.`name` as `sn`,  
         {$this->table}.`email` as `se`, {$this->table}.`phone` as `sp`, {$this->table}.`address` as `sa`, 
-        `guardian_name`, `profile_photo`, `class_name`, `teacher`.`name` as `tn` FROM (({$this->table} 
-        INNER JOIN `teacher` ON {$this->table}.`teacher_id` = `teacher`.`id`) INNER JOIN `class` ON 
+        `guardian_name`, `profile_photo`, `class_name`, `teacher`.`name` as `tn`, {$this->table}.`class_id` as cid
+        FROM (({$this->table} INNER JOIN `teacher` ON {$this->table}.`teacher_id` = `teacher`.`id`) INNER JOIN `class` ON 
         {$this->table}.`class_id` = `class`.id) WHERE {$this->table}.`class_id` = ?");
         $stmt->bind_param("i", $this->class_id);
         $stmt->execute();
@@ -137,6 +137,29 @@ class Student
 
     public function delete()
     {
-
+        $stmt = $this->conn->prepare("SELECT `profile_photo` FROM {$this->table} WHERE id = ?");
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $stmt->bind_param("i", $this->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if($result->num_rows == 1){
+            foreach($result as $data){
+                $image = $data['profile_photo'];
+                unlink('C:\xampp1\htdocs\ClassManagement\uploads\students\profile_photo/'.$image);
+                $sql = $this->conn->prepare("DELETE FROM {$this->table} WHERE id = ?");
+                $this->id = htmlspecialchars(strip_tags($this->id));
+                $sql->bind_param("i", $this->id);
+                if($sql->execute()){
+                    header("location: ../student.php?id={$this->class_id}");
+                }
+            }
+        }else{
+                $sql = $this->conn->prepare("DELETE FROM {$this->table} WHERE id = ?");
+                $this->id = htmlspecialchars(strip_tags($this->id));
+                $sql->bind_param("i", $this->id);
+                if($sql->execute()){
+                    header("location: ../student.php?id={$this->class_id}");
+                }
+        }
     }
 }
