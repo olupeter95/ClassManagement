@@ -32,5 +32,4 @@
             toastr.error(sessionStorage.getItem("alert".message));
             break;
       }
-      endif
    </script>

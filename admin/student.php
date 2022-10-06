@@ -4,7 +4,6 @@ include_once '../config/Database.php';
 
 $database = new Database();
 $db = $database->getConnection();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,20 +65,22 @@ $db = $database->getConnection();
                                         <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
                                             <thead>
                                                 <tr role="row">
-                                                    <th width="5%">ID</th>
-                                                    <th class="sorting_asc"aria-sort="ascending" aria-controls="example1"
+                                                    <th width="2%">ID</th>
+                                                    <th width="8%" class="sorting_asc"aria-sort="ascending" aria-controls="example1"
                                                     aria-label="Name: activate to sort column descending">Photo</th>
-                                                    <th class="sorting_asc" aria-sort="ascending" aria-controls="example1" 
+                                                    <th width="8%" class="sorting_asc" aria-sort="ascending" aria-controls="example1" 
                                                     aria-label="Name: activate to sort column descending">Name</th>
-                                                    <th class="sorting_asc"aria-sort="ascending" aria-controls="example1"
+                                                    <th  width="5%" class="sorting_asc"aria-sort="ascending" aria-controls="example1"
                                                     aria-label="Name: activate to sort column descending">Email</th>                                         
-                                                    <th class="sorting_asc" aria-sort="ascending" aria-controls="example1" 
+                                                    <th  width="5%" class="sorting_asc" aria-sort="ascending" aria-controls="example1" 
                                                     aria-label="Name: activate to sort column descending">Phone</th>
-                                                    <th class="sorting_asc" aria-sort="ascending" aria-controls="example1" 
+                                                    <th width="8%" class="sorting_asc" aria-sort="ascending" aria-controls="example1" 
                                                     aria-label="Name: activate to sort column descending">Guardian Name</th>
-                                                    <th class="sorting_asc" aria-sort="ascending" aria-controls="example1"
+                                                    <th  width="8%"class="sorting_asc" aria-sort="ascending" aria-controls="example1" 
+                                                    aria-label="Name: activate to sort column descending">Address</th>
+                                                    <th  width="5%" class="sorting_asc" aria-sort="ascending" aria-controls="example1"
                                                     aria-label="Name: activate to sort column descending">Class</th>
-                                                    <th class="sorting_asc" aria-sort="ascending" aria-controls="example1" 
+                                                    <th width="8%" class="sorting_asc" aria-sort="ascending" aria-controls="example1" 
                                                     aria-label="Name: activate to sort column descending">Class Teacher</th>
                                                     <th width="30%">Action</th>
                                                 </tr>
@@ -101,6 +102,7 @@ $db = $database->getConnection();
 	  </div>
   </div>
   <!-- /.content-wrapper -->
+  <input type="hidden" id="class_id" value="<?php echo $_GET['id']; ?>">
   <?php
 	include_once 'footer.php';
   ?>
@@ -124,11 +126,12 @@ $db = $database->getConnection();
   	
     <script type="text/javascript">
         function viewStudent(){
-            var action = 'viewTeacher'
+            var action = 'viewStudent'
+            var class_id = $('#class_id').val()
             $.ajax({
                 type:'post',
                 dataType:'json',
-                data:{action:action},
+                data:{action:action, class_id:class_id},
                 url:'action/student_action.php',
                 success: function(data){
                     var rows = ''
@@ -138,20 +141,19 @@ $db = $database->getConnection();
                         rows += `
                         <tr>
                             <td>${i++}</td>
-                            <td>${value.profile_photo}</td>
-                            <td>${value.name}</td>
-                            <td>${value.email}</td>
-                            <td>${value.phone}</td>
+                            <td><img src="../uploads/students/profile_photo/${value.profile_photo}" style="width:50px;height:50px;"></td>
+                            <td>${value.sn}</td>
+                            <td>${value.se}</td>
+                            <td>${value.sp}</td>
+                            <td>${value.sa}</td>
                             <td>${value.guardian_name}</td>
-                            <td>${value.address}</td>
-                            <td>${value.class}</td>
-                            <td>${value.teacher}</td>
+                            <td>${value.class_name}</td>
+                            <td>${value.tn}</td>
                             <td>
-                                <a href="edit_student.php?id=${value.id}" class="btn btn-primary">
-                                <i class="fa fa-pencil"></i>&nbsp;Edit
-                                </a>
-                                <a href="action/student_action.php?id=${value.id}&name=delTeacher" class="btn btn-danger delete">
-                                <i class="fa fa-trash"></i>&nbsp;Delete</a>
+                                <a href="edit_student.php?id=${value.id}" class="btn btn-primary" title="Edit">
+                                <i class="fa fa-pencil"></i></a><br><br>
+                                <a href="action/student_action.php?id=${value.id}&name=delTeacher" title="Delete" class="btn btn-danger delete">
+                                <i class="fa fa-trash"></i></a>
                             </td>
                          </tr>`
                     }) 

@@ -23,9 +23,10 @@ class Student
     {
         $stmt = $this->conn->prepare("SELECT {$this->table}.`id` as id, {$this->table}.`name` as `sn`,  
         {$this->table}.`email` as `se`, {$this->table}.`phone` as `sp`, {$this->table}.`address` as `sa`, 
-        `guardian`, `profile_photo`, `class_name`, `teacher`.`name` as `tn` ((FROM {$this->table} INNER JOIN
-        `teacher` ON {$this->table}.`teacher_id` = teacher.id) INNER JOIN `class` ON 
-        {$this->table}.`class_id` = `class`.id)");
+        `guardian_name`, `profile_photo`, `class_name`, `teacher`.`name` as `tn` FROM (({$this->table} 
+        INNER JOIN `teacher` ON {$this->table}.`teacher_id` = `teacher`.`id`) INNER JOIN `class` ON 
+        {$this->table}.`class_id` = `class`.id) WHERE {$this->table}.`class_id` = ?");
+        $stmt->bind_param("i", $this->class_id);
         $stmt->execute();
         $result = $stmt->get_result();
         $data = [];
@@ -114,7 +115,24 @@ class Student
 
     public function update()
     {
-        
+        $stmt = $this->conn->prepare("UPDATE {$this->table} SET `name` = ?, `phone` = ?, `email` = ?,
+        `guardian_name` = ?, `address` = ?, `class_id` = ?, `teacher_id` = ? WHERE id = ?");
+        $this->name = ucwords(htmlspecialchars(strip_tags($this->name)));
+        $this->phone = htmlspecialchars(strip_tags($this->phone));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->guardian_name = ucwords(htmlspecialchars(strip_tags($this->guardian_name)));
+        $this->address = ucwords(htmlspecialchars(strip_tags($this->address)));
+        $this->class_id = htmlspecialchars(strip_tags($this->class_id));
+        $this->teacher_id = htmlspecialchars(strip_tags($this->teacher_id));
+        $stmt->bind_param("sssssiii", $this->name, $this->phone, $this->email, $this->address,
+        $this->guardian_name, $this->class_id, $this->teacher_id, $this->id) ;
+        if($stmt->execute()){
+            $response = [
+                'success' => true,
+                'message' => 'updated'
+            ];
+            echo json_encode($response);
+        }       
     }
 
     public function delete()
