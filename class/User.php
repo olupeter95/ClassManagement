@@ -3,6 +3,14 @@
 class User
 {
     private $conn;
+    private $adminTable = 'admin';
+    private $studentTable = 'student';
+    private $teacherTable = 'teacher';
+
+    public function __construct($db)
+    {
+        $this->conn = $db;    
+    }
 
     public function login()
     {
@@ -35,11 +43,25 @@ class User
         }
     }
 
-    public function loggedIn (){
+    public function loggedIn ()
+    {
 		if(!empty($_SESSION["userid"])) {
 			return 1;
 		} else {
 			return 0;
 		}
 	}
+
+    public function regAdmin()
+    {
+        $stmt = $this->conn->prepare("INSERT INTO {$this->adminTable} (`name`, `email`, `password`)
+        VALUES(?,?,?)");
+        $this->name = ucwords(htmlspecialchars(strip_tags($this->name)));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->password = md5($this->password);
+        $stmt->bind_param("sss", $this->name, $this->email, $this->password);
+        if($stmt->execute()){
+            header("location: index.php");
+        }
+    }
 }

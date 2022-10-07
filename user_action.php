@@ -14,3 +14,10 @@ if (!empty($_POST['action']) && $_POST['action'] == 'login') {
     $user->loginType = $_POST['loginType'];
     $user->login();
 }
+
+if(!empty($_POST['action']) && $_POST['action'] == 'regAdmin'){
+    $user->name = $_POST['name'];
+    $user->email = $_POST['email'];
+    $user->password = $_POST['password'];
+    $user->regAdmin();   
+}
