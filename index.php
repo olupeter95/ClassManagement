@@ -38,7 +38,7 @@
 											<span class="input-group-text bg-transparent text-white"><i class="ti-user"></i></span>
 										</div>
 										<input type="email" class="form-control pl-15 bg-transparent text-white plc-white" placeholder="Username"
-										name="email">
+										name="email" id="email">
 									</div>
 								</div>
 								<div class="form-group">
@@ -47,7 +47,7 @@
 											<span class="input-group-text  bg-transparent text-white"><i class="ti-lock"></i></span>
 										</div>
 										<input type="password" class="form-control pl-15 bg-transparent text-white plc-white" 
-										placeholder="Password" name="password">
+										placeholder="Password" name="password" id="password">
 									</div>
 								</div>
 								<div class="row my-3 pl-2">
@@ -80,7 +80,8 @@
 									</div>
 									<!-- /.col -->
 									<div class="col-12 text-center">
-									  <button type="submit" class="btn btn-info btn-rounded mt-10">SIGN IN</button>
+									  <button type="button" class="btn btn-info btn-rounded mt-10" onclick="login()">
+										SIGN IN</button>
 									</div>
 									<!-- /.col -->
 								  </div>
@@ -101,7 +102,23 @@
 
 	<!-- Vendor JS -->
 	<script src="js/vendors.min.js"></script>
-    <script src="assets/icons/feather-icons/feather.min.js"></script>	
+    <script src="assets/icons/feather-icons/feather.min.js"></script>
+	<script type="text/javascript">
+		function login(){
+			var email = $('#email').val()
+			var password = $('#password').val()
+			var loginType = $("input[name='loginType']:checked").val()
+			var action = 'login'
+			$.ajax({
+				type: 'post',
+				url: 'user_action.php',
+				data: {email:email, password:password, loginType:loginType, action:action},
+				success: function(data){
+					console.log('login successfully')
+				}
+			})
+		}
+	</script>	
 
 </body>
 </html>
